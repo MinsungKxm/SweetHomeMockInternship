@@ -42,6 +42,7 @@ public enum LengthUnit {
     private DecimalFormat lengthFormatWithUnit;
     private DecimalFormat lengthFormat;
     private DecimalFormat areaFormatWithUnit;
+    private DecimalFormat volumeFormatWithUnit;
     
     @Override
     public Format getFormatWithUnit() {
@@ -53,6 +54,12 @@ public enum LengthUnit {
     public Format getAreaFormatWithUnit() {
       checkLocaleChange();
       return this.areaFormatWithUnit;
+    }
+
+    @Override
+    public Format getVolumeFormatWithUnit() {
+      checkLocaleChange();
+      return this.volumeFormatWithUnit;
     }
 
     @Override
@@ -77,6 +84,7 @@ public enum LengthUnit {
         this.lengthFormat = new MeterFamilyFormat("#,##0", 10);
         String squareMeterUnit = resource.getString("squareMeterUnit");
         this.areaFormatWithUnit = new SquareMeterAreaFormatWithUnit(squareMeterUnit);
+
       }
     }
 
@@ -115,6 +123,7 @@ public enum LengthUnit {
     private DecimalFormat lengthFormatWithUnit;
     private DecimalFormat lengthFormat;
     private DecimalFormat areaFormatWithUnit;
+    private DecimalFormat volumeFormatWithUnit;
     
     @Override
     public Format getFormatWithUnit() {
@@ -126,6 +135,12 @@ public enum LengthUnit {
     public Format getAreaFormatWithUnit() {
       checkLocaleChange();
       return this.areaFormatWithUnit;
+    }
+
+    @Override
+    public Format getVolumeFormatWithUnit() {
+      checkLocaleChange();
+      return this.volumeFormatWithUnit;
     }
 
     @Override
@@ -189,6 +204,7 @@ public enum LengthUnit {
     private DecimalFormat lengthFormatWithUnit;
     private DecimalFormat lengthFormat;
     private DecimalFormat areaFormatWithUnit;
+    private DecimalFormat volumeFormatWithUnit;
     
     @Override
     public Format getFormatWithUnit() {
@@ -200,6 +216,12 @@ public enum LengthUnit {
     public Format getAreaFormatWithUnit() {
       checkLocaleChange();
       return this.areaFormatWithUnit;
+    }
+
+    @Override
+    public Format getVolumeFormatWithUnit() {
+      checkLocaleChange();
+      return this.volumeFormatWithUnit;
     }
 
     @Override
@@ -261,6 +283,7 @@ public enum LengthUnit {
     private String        name;
     private DecimalFormat lengthFormat;
     private DecimalFormat areaFormatWithUnit;
+    private DecimalFormat volumeFormatWithUnit;
 
     @Override
     public Format getFormatWithUnit() {
@@ -277,6 +300,12 @@ public enum LengthUnit {
     public Format getAreaFormatWithUnit() {
       checkLocaleChange();
       return this.areaFormatWithUnit;
+    }
+
+    @Override
+    public Format getVolumeFormatWithUnit() {
+      checkLocaleChange();
+      return this.volumeFormatWithUnit;
     }
     
     @Override
@@ -494,6 +523,7 @@ public enum LengthUnit {
     private DecimalFormat lengthFormat;
     private DecimalFormat lengthFormatWithUnit;
     private DecimalFormat areaFormatWithUnit;
+    private DecimalFormat volumeFormatWithUnit;
 
     @Override
     public Format getFormatWithUnit() {
@@ -511,6 +541,12 @@ public enum LengthUnit {
     public Format getAreaFormatWithUnit() {
       checkLocaleChange();
       return this.areaFormatWithUnit;
+    }
+
+    @Override
+    public Format getVolumeFormatWithUnit() {
+      checkLocaleChange();
+      return this.volumeFormatWithUnit;
     }
     
     @Override
@@ -689,6 +725,11 @@ public enum LengthUnit {
    * Returns a format able to format areas with their localized unit.
    */
   public abstract Format getAreaFormatWithUnit();
+
+  /**
+   * Returns a format able to format volumes with their localized unit.
+   */
+  public abstract Format getVolumeFormatWithUnit();
 
   /**
    * A decimal format for square meter.
