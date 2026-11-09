@@ -3011,10 +3011,10 @@ public class HomePane extends JRootPane implements HomeView {
             this.deleteRoomPointActionEnabled = deleteRoomPointAction.isEnabled();
             if (this.deleteRoomPointActionEnabled) {
               // Check mouse location is over a point of the room
-              Room selectedRoom = (Room)home.getSelectedItems().get(0);
+              Room selectedRoom = (Room) home.getSelectedItems().get(0);
               float x = planController.getView().convertXPixelToModel(mouseLocation.x);
               float y = planController.getView().convertYPixelToModel(mouseLocation.y);
-              deleteRoomPointAction.setEnabled(planController.isRoomPointDeletableAt(selectedRoom, x, y));              
+              deleteRoomPointAction.setEnabled(planController.isRoomPointDeletableAt(selectedRoom, x, y));
             }
           }
         }
