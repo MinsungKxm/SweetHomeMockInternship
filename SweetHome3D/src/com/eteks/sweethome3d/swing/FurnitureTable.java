@@ -921,8 +921,14 @@ public class FurnitureTable extends JTable implements View, Printable {
           case HEIGHT : 
             writer.write(sizeFormat.format(copiedPiece.getHeight()));
             break;
-          case VOLUME :
-            writer.write(sizeFormat.format(copiedPiece.getVolume()));
+          case VOLUME:
+            Format volumeFormat;
+            if (this.preferences.getLengthUnit() == LengthUnit.INCH) {
+              volumeFormat = LengthUnit.INCH_DECIMALS.getVolumeFormatWithUnit();
+            } else {
+              volumeFormat = this.preferences.getLengthUnit().getVolumeFormatWithUnit();
+            }
+            writer.write(volumeFormat.format(copiedPiece.getVolume()));
             break;
           case X : 
             writer.write(sizeFormat.format(copiedPiece.getX()));
@@ -1310,7 +1316,11 @@ public class FurnitureTable extends JTable implements View, Printable {
              Object value, boolean isSelected, boolean hasFocus, 
              int row, int column) {
           if (value != null) {
-            value = preferences.getLengthUnit().getFormat().format((Float)value);
+            if (property == HomePieceOfFurniture.SortableProperty.VOLUME) {
+              value = preferences.getLengthUnit().getVolumeFormatWithUnit().format((Float)value);
+            } else {
+              value = preferences.getLengthUnit().getFormat().format((Float)value);
+            }
           }
           setHorizontalAlignment(JLabel.RIGHT);
           return super.getTableCellRendererComponent(
