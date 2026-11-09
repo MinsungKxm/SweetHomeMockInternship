@@ -42,6 +42,7 @@ public enum LengthUnit {
     private DecimalFormat lengthFormatWithUnit;
     private DecimalFormat lengthFormat;
     private DecimalFormat areaFormatWithUnit;
+    private DecimalFormat volumeFormatWithUnit;
     
     @Override
     public Format getFormatWithUnit() {
@@ -53,6 +54,12 @@ public enum LengthUnit {
     public Format getAreaFormatWithUnit() {
       checkLocaleChange();
       return this.areaFormatWithUnit;
+    }
+
+    @Override
+    public Format getVolumeFormatWithUnit() {
+      checkLocaleChange();
+      return this.volumeFormatWithUnit;
     }
 
     @Override
@@ -77,6 +84,9 @@ public enum LengthUnit {
         this.lengthFormat = new MeterFamilyFormat("#,##0", 10);
         String squareMeterUnit = resource.getString("squareMeterUnit");
         this.areaFormatWithUnit = new SquareMeterAreaFormatWithUnit(squareMeterUnit);
+        String cubicMeterUnit = resource.getString("cubicMeterUnit");
+        this.volumeFormatWithUnit = new CubicMeterVolumeFormatWithUnit(cubicMeterUnit);
+
       }
     }
 
@@ -115,6 +125,7 @@ public enum LengthUnit {
     private DecimalFormat lengthFormatWithUnit;
     private DecimalFormat lengthFormat;
     private DecimalFormat areaFormatWithUnit;
+    private DecimalFormat volumeFormatWithUnit;
     
     @Override
     public Format getFormatWithUnit() {
@@ -126,6 +137,12 @@ public enum LengthUnit {
     public Format getAreaFormatWithUnit() {
       checkLocaleChange();
       return this.areaFormatWithUnit;
+    }
+
+    @Override
+    public Format getVolumeFormatWithUnit() {
+      checkLocaleChange();
+      return this.volumeFormatWithUnit;
     }
 
     @Override
@@ -150,6 +167,8 @@ public enum LengthUnit {
         this.lengthFormat = new MeterFamilyFormat("#,##0.#", 1);
         String squareMeterUnit = resource.getString("squareMeterUnit");
         this.areaFormatWithUnit = new SquareMeterAreaFormatWithUnit(squareMeterUnit);
+        String cubicMeterUnit = resource.getString("cubicMeterUnit");
+        this.volumeFormatWithUnit = new CubicMeterVolumeFormatWithUnit(cubicMeterUnit);
       }
     }
 
@@ -189,6 +208,7 @@ public enum LengthUnit {
     private DecimalFormat lengthFormatWithUnit;
     private DecimalFormat lengthFormat;
     private DecimalFormat areaFormatWithUnit;
+    private DecimalFormat volumeFormatWithUnit;
     
     @Override
     public Format getFormatWithUnit() {
@@ -200,6 +220,12 @@ public enum LengthUnit {
     public Format getAreaFormatWithUnit() {
       checkLocaleChange();
       return this.areaFormatWithUnit;
+    }
+
+    @Override
+    public Format getVolumeFormatWithUnit() {
+      checkLocaleChange();
+      return this.volumeFormatWithUnit;
     }
 
     @Override
@@ -224,6 +250,8 @@ public enum LengthUnit {
         this.lengthFormat = new MeterFamilyFormat("#,##0.00#", 0.01f);
         String squareMeterUnit = resource.getString("squareMeterUnit");
         this.areaFormatWithUnit = new SquareMeterAreaFormatWithUnit(squareMeterUnit);
+        String cubicMeterUnit = resource.getString("cubicMeterUnit");
+        this.volumeFormatWithUnit = new CubicMeterVolumeFormatWithUnit(cubicMeterUnit);
       }
     }
 
@@ -261,6 +289,7 @@ public enum LengthUnit {
     private String        name;
     private DecimalFormat lengthFormat;
     private DecimalFormat areaFormatWithUnit;
+    private DecimalFormat volumeFormatWithUnit;
 
     @Override
     public Format getFormatWithUnit() {
@@ -277,6 +306,12 @@ public enum LengthUnit {
     public Format getAreaFormatWithUnit() {
       checkLocaleChange();
       return this.areaFormatWithUnit;
+    }
+
+    @Override
+    public Format getVolumeFormatWithUnit() {
+      checkLocaleChange();
+      return this.volumeFormatWithUnit;
     }
     
     @Override
@@ -455,6 +490,8 @@ public enum LengthUnit {
         
         String squareFootUnit = resource.getString("squareFootUnit");
         this.areaFormatWithUnit = new SquareFootAreaFormatWithUnit("#,##0 " + squareFootUnit);
+        String cubicFootUnit = resource.getString("cubicFootUnit");
+        this.volumeFormatWithUnit = new CubicFootVolumeFormatWithUnit("#,##0.### " + cubicFootUnit);
       }
     }
     
@@ -494,6 +531,7 @@ public enum LengthUnit {
     private DecimalFormat lengthFormat;
     private DecimalFormat lengthFormatWithUnit;
     private DecimalFormat areaFormatWithUnit;
+    private DecimalFormat volumeFormatWithUnit;
 
     @Override
     public Format getFormatWithUnit() {
@@ -511,6 +549,12 @@ public enum LengthUnit {
     public Format getAreaFormatWithUnit() {
       checkLocaleChange();
       return this.areaFormatWithUnit;
+    }
+
+    @Override
+    public Format getVolumeFormatWithUnit() {
+      checkLocaleChange();
+      return this.volumeFormatWithUnit;
     }
     
     @Override
@@ -582,6 +626,8 @@ public enum LengthUnit {
         
         String squareFootUnit = resource.getString("squareFootUnit");
         this.areaFormatWithUnit = new SquareFootAreaFormatWithUnit("#,##0.## " + squareFootUnit);
+        String cubicFootUnit = resource.getString("cubicFootUnit");
+        this.volumeFormatWithUnit = new CubicFootVolumeFormatWithUnit("#,##0.### " + cubicFootUnit);
       }
     }
     
@@ -691,6 +737,11 @@ public enum LengthUnit {
   public abstract Format getAreaFormatWithUnit();
 
   /**
+   * Returns a format able to format volumes with their localized unit.
+   */
+  public abstract Format getVolumeFormatWithUnit();
+
+  /**
    * A decimal format for square meter.
    */
   private static class SquareMeterAreaFormatWithUnit extends DecimalFormat {
@@ -705,7 +756,39 @@ public enum LengthUnit {
       return super.format(number / 10000, result, fieldPosition);                
     }
   }
-  
+
+  /**
+   * A decimal format for cubic meter.
+   */
+  private static class CubicMeterVolumeFormatWithUnit extends DecimalFormat {
+    public CubicMeterVolumeFormatWithUnit(String cubicMeterUnit) {
+      super("#,##0.### " + cubicMeterUnit);
+    }
+
+    @Override
+    public StringBuffer format(double number, StringBuffer result,
+                               FieldPosition fieldPosition) {
+      // Convert cubic centimeter to cubic meter
+      return super.format(number / 1000000, result, fieldPosition);
+    }
+  }
+
+  /**
+   * A decimal format for cubic foot.
+   */
+  private static class CubicFootVolumeFormatWithUnit extends DecimalFormat {
+    public CubicFootVolumeFormatWithUnit(String pattern) {
+      super(pattern);
+    }
+
+    @Override
+    public StringBuffer format(double number, StringBuffer result,
+                               FieldPosition fieldPosition) {
+      // Convert cubic centimeter to cubic foot
+      return super.format(number / 28316.846592, result, fieldPosition);
+    }
+  }
+
   /**
    * A decimal format for square foot.
    */
