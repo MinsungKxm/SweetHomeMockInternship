@@ -380,51 +380,16 @@ public class HomePrintableComponent extends JComponent implements Printable {
         && planView != null 
         && (homePrint == null || homePrint.isPlanPrinted())) {
       // Save the currently selected level
-      Level selectedLevel = home.getSelectedLevel();
+int planPageIndex = page - this.furniturePageCount;
 
-      try {
-        int planPageIndex = page - this.furniturePageCount;
+pageExists =
+    ((Printable)planView).print(g2D, pageFormat, planPageIndex);
 
-        for (Level level : home.getLevels()) {
-          if (!level.isViewable()) {
-            continue;
-          }
-
-          home.setSelectedLevel(level);
-
-          BufferedImage dummyImage = new BufferedImage(
-              1, 1, BufferedImage.TYPE_INT_RGB);
-          Graphics dummyGraphics = dummyImage.getGraphics();
-
-          int levelPageExists =
-              ((Printable)planView).print(dummyGraphics, pageFormat, 0);
-
-          dummyGraphics.dispose();
-
-          if (levelPageExists == PAGE_EXISTS) {
-            if (planPageIndex == 0) {
-              pageExists =
-                  ((Printable)planView).print(g2D, pageFormat, 0);
-
-              if (pageExists == PAGE_EXISTS
-                  && !this.printablePages.contains(page)) {
-                this.printablePages.add(page);
-                this.planPageCount++;
-              }
-
-              break;
-            }
-
-            planPageIndex--;
-          }
-        }
-
-      } catch (Exception ex) {
-        ex.printStackTrace();
+if (pageExists == PAGE_EXISTS
+    && !this.printablePages.contains(page)) {
+        this.printablePages.add(page);
+        this.planPageCount++;
       }
-
-      // Restore the originally selected level
-      home.setSelectedLevel(selectedLevel);
     }
     View view3D = this.controller.getHomeController3D().getView();
     if (pageExists == NO_SUCH_PAGE
